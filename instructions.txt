@@ -1,0 +1,128 @@
+Följande är instruktioner till hur programmet jag utvecklat bör användas.
+
+Vid start syns en skärm med tre knappar:
+
+	- Start New Evolution
+		Denna knapp startar en tom ny evolution med slumpade varelser som har slumpade hjärnor. Man möts med
+		en ny skärm där man kan se hur mycket av varelserna som har skapats. Varför det tar lång tid är p.g.a. 
+		att man behöver vänta ett litet tag mellan slumpningar av tal för att försäkra sig om att de inte är
+		samma tal som slumpats fram.
+		
+	- Load From File
+		Denna knapp ber dig välja en fil som ska agera som standard-hjärna för varelserna som ska användas
+		i simulationen. (I mappen som heter "neural network" ligger där en .json fil som heter "201804101506.json".
+		Välj denna fil för att få ett neural network som fungerar någorlunda bra, istället för ett som är väldigt dumt.
+		Två instanser av programmet kan köras parallellt, där den ena har laddats med en färdig hjärna, och en som
+		har en tom ny evolution med slumpade varelser för att lätt se skillnad på varelsernas prestation.
+		
+	- Exit
+		Gissa vad den gör.
+		
+
+Om man har tryckt på Start New Evolution möts man med en loading screen, som sedan övergår till en skärm
+som är själva evolutionsskärmen. När man valt fil genom Load From File möts man med samma evolutionsskärm.
+Detta kan göras i evolutionsskärmen.
+
+I evolutionsskärmen, hädanefter kallat ES, är själva evolutionen pausad först.
+För att starta evolutionen kan man antingen klicka på knappen där det står Paused, för att växla över till Playing,
+eller kan man klicka på en av de tre knapparna 1x, 5x, 10x. Det är inte rekomenderat att använda knappen 10x, då
+det gör evolutionen oerhört laggig och gör det svårt att se vad som verkligen sker. Rekomenderat är att använda 5x
+vid normal användning, och 1x då man vill se evolutionen gå lite långsammare.
+
+Följande knappar är ur bruk och bör inte användas vid körning.
+
+	- Show Network | Skälet är att det nu finns bättre sätt att titta på varelsens nätverk.
+	- ASNG | Skälet är att det nu finns bättre sätt att titta på varelsens nätverk.
+	- ASBP | Skälet är att det nu finns bättre sätt att titta på varelsens nätverk.
+	
+
+För att titta sig omkring i det evolutionära området har man följande kamera-funktioner till sitt förfogande.
+
+	- W | Flyttar kameran uppåt.
+	- A | Flyttar kameran åt vänster.
+	- S | Flyttar kameran nedåt.
+	- D | Flyttar kameran åt höger.
+	
+	- Skrollhjul | Zoomar in/ut. Kamerans hastighet i rörelse med WASD är relativ till hur zoomad den är. Utzoomad = snabbare, Inzoomad = långsammare.
+
+	
+Knappen Debug är avsedd för att debugga, men knappen själv gör ingenting. Den togglar endast om man kan se vissa
+saker som specificeras i Console. 
+Klickar man på Console öppnas ett litet internt fönster upp som man kan flytta genom att dra i, och stänga ner genom att
+trycka på Escape. I fönstret kan man skriva in kommandon för att åstadkomma vissa saker.
+När det gäller debugging är showEenergy och showVF relevanta. 
+
+Kommandon i Console.
+
+	/evoSpeed <speed(integer)> | Sätter evolutionshastigheten till parametern som specificerats.
+	
+	/evoTime <time(integer)> | Sätter tiden en generation är till den parameter som specificerats. 
+	
+	/exit | Stänger av programmet.
+	
+	/graphXScale <xscale(integer)> | Sätter grafens xscale till den parameter som specificerats. Denna används för
+									 att kunna se utvecklingen av flera generationer samtidigt. Man kan se en mer
+									 sammanhängande utveckling av varelserna med en högre xscale. OBS! Vid användning
+									 av xscale som inte är 1 (default vid start är 1) kan kraschar ske, var försiktigt.
+									 
+	/help | Skriver ut varje tillgängligt kommando.
+	
+	/infiniteTime | Sätter tiden en generation är till ett virtuellt oändligt tal.
+	
+	/killProcess | Stänger av programmet. Är skilt från /exit p.g.a. hur content laddas i programmet. 
+	
+	/pause | Pausar evolutionen, gör samma sak som knappen uppe till vänster som också pausar.
+	
+	/play | Startar/fortsätter evolutionen, gör samma sak som knappen uppe till vänster som också startar eller fortsätter.
+	
+	/showEnergy | Debug-funktion. Synliggör den energi som varje varelser har. Denna energi skrivs ut någorlunda litet bredvid varelsen, du
+			      kan behöva zooma in för att se den. Skriv /showEnergy igen för att stänga av. Kräver att knappen Debug är intryckt (intryckt är
+				  när knappen är ljus, och avtryckt är när den är mörk).
+				  
+	/showVF | Debug-funktion. Synliggör alla synfält för alla varelser. Skriv /showVF igen för att stänga av. Kräver att knappen Debug är intryckt 
+			  (intryckt är när knappen är ljus, och avtryckt är när den är mörk).
+			  
+
+Knappen Grapher visar ett internt fönster som visualiserar varelsernas gemensamma presation per vald graphXScale generation.
+Följande funktioner är tillgängliga i Grapher.
+
+	- Close | Stänger Grapher-fönstret.
+	
+	- Median | Väljer att det är medianen av generationens fitness som ska visas i grafen.
+	
+	- Average | Väljer att det är medelvärdet av generationens fitness som ska visas i grafen.
+	
+	- Highest | Väljer att det är det högsta av generationens fitness som ska visas i grafen.
+	
+	- Lowest | Väljer att det är det lägsta av generationens fitness som ska visas i grafen.
+	
+	- En röd kurva som följer den valda parametern visas och uppdateras dynamiskt under evolutionen. Kan ses förändras i realtime.
+	  Genom att hålla musen över grafen kan man se vilket värde parametern hade just den generation man har musen över.
+
+	- Genom att hålla musen stilla över en generation i ca. 3 sekunder kommer det att visas ett tooltip som säger:
+	
+		- Right Click: Simulate | Om man då högerklickar en gång när detta tooltip visas kommer den generation man håller över att
+								  ersätta den som just nu håller på att utvecklas. Ingen fara, man kan gå tillbaka till den generation
+								  man var på innan man valde att simulera. Detta görs genom att klicka på knappen Return längst upp till
+								  höger, som nu inte längre har ett rött kryss över sig. 
+		
+		- Left Shift + Right Click: View | Om man högerklicka samtidigt som man håller in Left Shift kommer ännu ett internt fönster att visas.
+										   I det nya fönstret kan man se varje individ i den valda generationen. Där är en EN gul individ, detta 
+										   är den individ som hade högst fitness den generationen. Genom att klicka på dessa enskilda individer
+										   öppnas ett tooltip där man kan se en visualisation av just den varelsens neural network. Högst upp kan
+										   även dessa slutgiltiga fitness ses.
+
+										   
+Knappen Exit högst upp till vänster avslutar evolutionen. Du kommer att bli promptad om skulle vilja spara ner det neural network
+som presterat bäst i den nuvarande generationen.
+
+	- Yes | Du kommer att få en Save File Dialog öppnad åt dig och där kan du skriva in namnet du vill att neural networket ska ha och
+			därefter trycka Spara. VARNING!! Att trycka Avbryt kommer att krascha programmet!
+			
+	- No | Du kommer att bli utslängd till startmenyn som du såg när du först startade programmet. Du bör undvika att återstarta en evolution
+		   i detta stadie. Det bästa är att avsluta programmet och starta om det, om du skulle vilja göra en ny evolution. 
+		   
+    - Cancel | Avbryter hela avslutandet och gör att programmet återgår till ES.
+	
+	
+Detta bör inkludera allt man kan göra. Resten är bakgrundshanterat och bör inte fifflas med.
